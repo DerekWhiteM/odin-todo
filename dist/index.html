@@ -6,16 +6,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="icon" href="data:;base64,=">
-    <link rel="stylesheet" href="reset.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
     <script src="main.js" defer></script>
 </head>
 <body>
     <div id="app">
-        <div class="navbar">
-            <button class="navbar__link">View all projects</button>
+
+        <div class="topbar">
+            <div>ToDo List</div>
         </div>
-        <div class="content"></div>
+
+        <div class="sidebar">
+            <div class="sidebar__link active">
+                <img class="sidebar__link__icon"src="images/inbox.png"/>
+                All tasks
+            </div>
+            <div class="sidebar__projects">
+                <div class="sidebar__projects__header">Projects</div>
+                <ul></ul>
+                <div class="sidebar__link">+ Add Project</div>
+            </div>
+        </div>
+
+        <div class="project">
+            <div class="project__title">All tasks</div>
+            <ul></ul>
+            <div class="project__item">+ Add Task</div>
+        </div>
+
     </div>
 </body>
 </html>
