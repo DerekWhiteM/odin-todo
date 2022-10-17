@@ -59,24 +59,157 @@ body {
     font-weight: bold;
 }
 
-.project {
-    background-color: #eee;
-    padding: 40px 150px 40px 150px;
+.sidebar__projects__list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
-.project__title {
-    font-size: 1.6rem;
-    font-weight: bold;
-    margin-bottom: 20px;
+.sidebar__projects__add {
+    margin-top: 5px;
 }
 
-.project__item {
-    background-color: rgba(200, 200, 200, 0.4);
-    padding: 10px 10px 10px 10px;
+.sidebar__projects__input {
+    margin-top: 5px;
+    display: inline-block;
+    width: calc(100% - 6px);
+    font-size: inherit;
+    height: 2rem;
+    border: 1px solid black;
     border-radius: 4px;
 }
 
-.project__item:hover {
+
+.sidebar__projects__add__btns {
+    display: flex;
+    width: 100%;
+    margin-right: 5px;
+    margin-top: 10px;
+    gap: 10px;
+}
+
+.sidebar__projects__add__btn {
+    flex: 1;
+    width: 100%;
+    font-size: inherit;
+    padding: 7px 0px 7px 0px;
+    border-radius: 4px;
+}
+
+.sidebar__projects__add__btn:hover {
+    cursor: pointer;
+}
+
+.sidebar__projects__add__btn--save {
+    background-color: #aaffaa;
+    border: 1px solid #99dd99;
+}
+
+.sidebar__projects__add__btn--save:hover {
+    background-color: #99dd99;
+}
+
+.sidebar__projects__add__btn--cancel {
+    background-color: #ffbebe;
+    border: 1px solid #eeadad;
+}
+
+.sidebar__projects__add__btn--cancel:hover {
+    background-color: #eeadad;
+}
+
+.project {
+    background-color: #eee;
+    padding: 40px 150px 40px 150px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 1.2rem;
+}
+
+.project__title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.project__tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.project__addTask {
+    background-color: rgba(200, 200, 200, 0.4);
+    padding: 10px 10px 10px 10px;
+    border-radius: 4px;
+    display: flex;
+    gap: 10px;
+}
+
+.project__addTask:hover, .project__tasks__item:hover {
     background-color: rgba(200, 200, 200, 0.85);
     cursor: pointer;
+}
+
+.project__tasks__item {
+    padding: 10px 10px 10px 10px;
+    border-radius: 4px;
+    display: flex;
+    gap: 10px;
+}
+
+.project__tasks__item__dueDate {
+    flex: 1;
+    text-align: right;
+}
+
+.project__taskInputArea {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+}
+
+.project__taskInputArea__input {
+    flex: 1;
+    padding: 10px 10px 10px 10px;
+    border: 1px solid black;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.project__taskInputArea__btn {
+    padding: 0px 15px 0px 15px;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.project__taskInputArea__btn:hover {
+    cursor: pointer;
+}
+
+.project__taskInputArea__btn--save {
+    background-color: #aaffaa;
+    border: 1px solid #99dd99;
+}
+
+.project__taskInputArea__btn--save:hover {
+    background-color: #99dd99;
+}
+
+.project__taskInputArea__btn--cancel {
+    background-color: #ffbebe;
+    border: 1px solid #eeadad;
+}
+
+.project__taskInputArea__btn--cancel:hover {
+    background-color: #eeadad;
+}
+
+.project__tasks__item__remove {
+    visibility: hidden;
+}
+
+.project__tasks__item:hover .project__tasks__item__remove {
+    visibility: visible;
 }

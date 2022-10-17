@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="main.js" defer></script>
+    <script src="https://kit.fontawesome.com/bf1240025d.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div id="app">
@@ -18,21 +19,27 @@
         </div>
 
         <div class="sidebar">
-            <div class="sidebar__link active">
-                <img class="sidebar__link__icon"src="images/inbox.png"/>
+            <div class="sidebar__allTasks sidebar__link active">
+                <i class="fas fa-inbox"></i>
                 All tasks
             </div>
             <div class="sidebar__projects">
                 <div class="sidebar__projects__header">Projects</div>
-                <ul></ul>
-                <div class="sidebar__link">+ Add Project</div>
+                <ul class="sidebar__projects__list"></ul>
+                <div class="sidebar__projects__add sidebar__link">
+                    <i class="fas fa-plus"></i>
+                    Add project
+                </div>
             </div>
         </div>
 
         <div class="project">
-            <div class="project__title">All tasks</div>
-            <ul></ul>
-            <div class="project__item">+ Add Task</div>
+            <div class="project__title"></div>
+            <ul class="project__tasks"></ul>
+            <div class="project__addTask">
+                <i class="fas fa-plus"></i>
+                <div>Add task</div>
+            </div>
         </div>
 
     </div>
