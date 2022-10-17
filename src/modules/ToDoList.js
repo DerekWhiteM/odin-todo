@@ -13,11 +13,10 @@ const ToDoList = (() => {
     function setDueDate(title, dueDate) {
         for (const project of this.projects) {
             const task = project.tasks.find(el => el.title === title);
-            if (task) {
-                task.dueDate = dueDate;
-                Storage.saveToDoList();
-                break;
-            }
+            if (!task) { continue; }
+            task.dueDate = dueDate;
+            Storage.saveToDoList();
+            break;
         }
     }
 
@@ -25,12 +24,11 @@ const ToDoList = (() => {
         for (const project of this.projects) {
             const task = project.tasks.find(el => el.title === taskTitle);
             const index = project.tasks.indexOf(task);
-            if (index !== -1) {
-                project.tasks.splice(index, 1);
-                break;
-            }
+            if (index === -1) { continue; }
+            project.tasks.splice(index, 1);
+            Storage.saveToDoList();
+            break;
         }
-        Storage.saveToDoList();
     }
 
     function addProject(project) {

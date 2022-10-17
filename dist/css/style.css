@@ -14,123 +14,50 @@ body {
     grid-template-rows: max-content 1fr;
 }
 
-.topbar {
-    background-color: #161b22;
-    grid-column: 1 / 3;
-    color: white;
-    font-size: 2.5rem;
-    padding: 20px;
-}
-
-.sidebar {
-    background-color: #ddd;
-    width: 300px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.sidebar__link {
-    font-size: 1.2rem;
-    padding: 10px 20px 10px 20px;
-    border-radius: 4px;
-    display: flex;
-    gap: 10px;
-}
-
-.sidebar__link__icon {
-    height: 1em;
-}
-
-.sidebar__projects__header {
-    font-size: 1.4rem;
-    font-weight: bold;
-    padding: 10px 0px 10px 0px;
-}
-
-.sidebar__link:hover {
-    background-color: lightgray;
-    cursor: pointer;
-}
-
-.sidebar__link.active {
-    background-color: rgba(200, 200, 200, 0.85);
-    font-weight: bold;
-}
-
-.sidebar__projects__list {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.sidebar__projects__add {
-    margin-top: 5px;
-}
-
-.sidebar__projects__input {
-    margin-top: 5px;
-    display: inline-block;
-    width: calc(100% - 6px);
-    font-size: inherit;
-    height: 2rem;
-    border: 1px solid black;
-    border-radius: 4px;
-}
-
-
-.sidebar__projects__add__btns {
-    display: flex;
-    width: 100%;
-    margin-right: 5px;
-    margin-top: 10px;
-    gap: 10px;
-}
-
-.sidebar__projects__add__btn {
-    flex: 1;
-    width: 100%;
-    font-size: inherit;
-    padding: 7px 0px 7px 0px;
-    border-radius: 4px;
-}
-
-.sidebar__projects__add__btn:hover {
-    cursor: pointer;
-}
-
-.sidebar__projects__add__btn--save {
-    background-color: #aaffaa;
-    border: 1px solid #99dd99;
-}
-
-.sidebar__projects__add__btn--save:hover {
-    background-color: #99dd99;
-}
-
-.sidebar__projects__add__btn--cancel {
-    background-color: #ffbebe;
-    border: 1px solid #eeadad;
-}
-
-.sidebar__projects__add__btn--cancel:hover {
-    background-color: #eeadad;
-}
-
 .project {
     background-color: #eee;
-    padding: 40px 150px 40px 150px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
     font-size: 1.2rem;
+    gap: 10px;
+    padding: 40px 150px;
 }
 
-.project__title {
-    font-size: 1.8rem;
-    font-weight: bold;
-    margin-bottom: 10px;
+.project__addTask {
+    background-color: rgba(200, 200, 200, 0.4);
+    border-radius: 4px;
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+}
+
+.project__addTask:hover {
+    background-color: rgba(200, 200, 200, 0.85);
+    cursor: pointer;
+}
+
+.project__tasks__item:hover {
+    background-color: rgba(200, 200, 200, 0.85);
+}
+
+.project__taskInputArea {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.project__taskInputArea__btn {
+    border-radius: 4px;
+    font-size: 1rem;
+    padding: 0 15px;
+}
+
+.project__taskInputArea__input {
+    border: 1px solid #000;
+    border-radius: 4px;
+    flex: 1;
+    font-size: 1rem;
+    padding: 10px;
 }
 
 .project__tasks {
@@ -139,24 +66,15 @@ body {
     gap: 10px;
 }
 
-.project__addTask {
-    background-color: rgba(200, 200, 200, 0.4);
-    padding: 10px 10px 10px 10px;
-    border-radius: 4px;
-    display: flex;
-    gap: 10px;
-}
-
-.project__addTask:hover, .project__tasks__item:hover {
-    background-color: rgba(200, 200, 200, 0.85);
-    cursor: pointer;
-}
-
 .project__tasks__item {
-    padding: 10px 10px 10px 10px;
     border-radius: 4px;
     display: flex;
     gap: 10px;
+    padding: 10px;
+}
+
+.project__tasks__item:hover .project__tasks__item__remove {
+    visibility: visible;
 }
 
 .project__tasks__item__dueDate {
@@ -164,52 +82,119 @@ body {
     text-align: right;
 }
 
-.project__taskInputArea {
-    width: 100%;
-    display: flex;
-    gap: 10px;
-}
-
-.project__taskInputArea__input {
-    flex: 1;
-    padding: 10px 10px 10px 10px;
-    border: 1px solid black;
-    border-radius: 4px;
-    font-size: 1rem;
-}
-
-.project__taskInputArea__btn {
-    padding: 0px 15px 0px 15px;
-    border-radius: 4px;
-    font-size: 1rem;
-}
-
-.project__taskInputArea__btn:hover {
-    cursor: pointer;
-}
-
-.project__taskInputArea__btn--save {
-    background-color: #aaffaa;
-    border: 1px solid #99dd99;
-}
-
-.project__taskInputArea__btn--save:hover {
-    background-color: #99dd99;
-}
-
-.project__taskInputArea__btn--cancel {
-    background-color: #ffbebe;
-    border: 1px solid #eeadad;
-}
-
-.project__taskInputArea__btn--cancel:hover {
-    background-color: #eeadad;
-}
-
 .project__tasks__item__remove {
     visibility: hidden;
 }
 
-.project__tasks__item:hover .project__tasks__item__remove {
-    visibility: visible;
+.project__tasks__item__remove:hover {
+    cursor: pointer;
+}
+
+.project__title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.sidebar {
+    background-color: #ddd;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    width: 300px;
+}
+
+.sidebar__link {
+    border-radius: 4px;
+    display: flex;
+    font-size: 1.2rem;
+    gap: 10px;
+    padding: 10px 20px;
+}
+
+.sidebar__link.active {
+    background-color: rgba(200, 200, 200, 0.85);
+    font-weight: 700;
+}
+
+.sidebar__link:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+.sidebar__link__icon {
+    height: 1em;
+}
+
+.sidebar__projects__add {
+    margin-top: 5px;
+}
+
+.sidebar__projects__add__btn {
+    border-radius: 4px;
+    flex: 1;
+    font-size: inherit;
+    padding: 7px 0;
+    width: 100%;
+}
+
+.sidebar__projects__add__btn--cancel, .project__taskInputArea__btn--cancel {
+    background-color: #ffbebe;
+    border: 1px solid #eeadad;
+}
+
+.sidebar__projects__add__btn--cancel:hover, .project__taskInputArea__btn--cancel:hover {
+    background-color: #eeadad;
+}
+
+.sidebar__projects__add__btn--save, .project__taskInputArea__btn--save {
+    background-color: #afa;
+    border: 1px solid #9d9;
+}
+
+.sidebar__projects__add__btn--save:hover, .project__taskInputArea__btn--save:hover {
+    background-color: #9d9;
+}
+
+.sidebar__projects__add__btn:hover, .project__taskInputArea__btn:hover {
+    cursor: pointer;
+}
+
+.sidebar__projects__add__btns {
+    display: flex;
+    gap: 10px;
+    margin-right: 5px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.sidebar__projects__header {
+    font-size: 1.4rem;
+    font-weight: 700;
+    padding: 10px 0;
+}
+
+.sidebar__projects__input {
+    border: 1px solid #000;
+    border-radius: 4px;
+    display: inline-block;
+    font-size: inherit;
+    height: 2rem;
+    margin-top: 10px;
+    width: calc(100% - 6px);
+}
+
+.sidebar__projects__list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.topbar {
+    background-color: #161b22;
+    color: #FFF;
+    font-size: 2.5rem;
+    grid-column: 1 / 3;
+    padding: 20px;
 }

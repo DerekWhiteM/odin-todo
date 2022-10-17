@@ -9,7 +9,7 @@ const Storage = (() => {
 
     function loadToDoList() {
         const storedProjects = JSON.parse(localStorage.getItem('projects'));
-        if (storedProjects.length > 0) {
+        if (storedProjects !== null) {
             ToDoList.projects = storedProjects;
         } else {
             ToDoList.projects = [ Project('All tasks') ];

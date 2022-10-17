@@ -1,6 +1,6 @@
-import ToDoList from './ToDoList';
-import Task from './Task';
 import Project from './Project';
+import Task from './Task';
+import ToDoList from './ToDoList';
 
 const UI = (() => {
 
@@ -12,26 +12,19 @@ const UI = (() => {
     function _loadProject(title) {
         
         function addTaskElement(task) {
-            const listItem = document.createElement('li');
-            listItem.classList.add('project__tasks__item');
-            const checkbox = document.createElement('i');
-            checkbox.classList.add('far');
-            checkbox.classList.add('fa-square');
-            checkbox.onclick = () => {
+
+            function remove() {
+                ToDoList.removeTask(task.title);
+                listItem.remove();
+            }
+
+            function handleMarkedComplete() {
                 checkbox.classList.remove('fa-square');
                 checkbox.classList.add('fa-square-check');
-                setTimeout(() => {
-                    ToDoList.removeTask(task.title);
-                    listItem.remove();
-                }, 500);
-            };
-            const taskTitle = document.createElement('div');
-            taskTitle.textContent = task.title;
-            const taskDue = document.createElement('div');
-            taskDue.classList.add('project__tasks__item__dueDate');
-            taskDue.textContent = task.dueDate || 'No date';
-            taskDue.addEventListener('click', () => {
-                console.log('date');
+                setTimeout(remove, 500);
+            }
+
+            function handleDateClick() {
                 taskDue.textContent = '';
                 const datePicker = document.createElement('input');
                 datePicker.type = 'date';
@@ -42,69 +35,113 @@ const UI = (() => {
                     datePicker.remove();
                 };
                 taskDue.append(datePicker);
-            });
-            const removeButton = document.createElement('i');
-            removeButton.classList.add('fas');
-            removeButton.classList.add('fa-times');
-            removeButton.classList.add('project__tasks__item__remove');
-            removeButton.addEventListener('click', () => {
-                ToDoList.removeTask(task.title);
-                listItem.remove();
-            });
+            }
+
+            function addTitle() {
+                const taskTitle = document.createElement('div');
+                taskTitle.textContent = task.title;
+                listItem.append(task.title);
+            }
+
+            function addRemoveButton() {
+                const removeButton = document.createElement('i');
+                removeButton.classList.add('fas');
+                removeButton.classList.add('fa-times');
+                removeButton.classList.add('project__tasks__item__remove');
+                removeButton.onclick = remove;
+                listItem.append(removeButton);
+            }
+
+            const listItem = document.createElement('li');
+            listItem.classList.add('project__tasks__item');
+
+            const checkbox = document.createElement('i');
+            checkbox.classList.add('far');
+            checkbox.classList.add('fa-square');
+            checkbox.onclick = handleMarkedComplete;
             listItem.append(checkbox);
-            listItem.append(task.title);
+
+            addTitle();
+
+            const taskDue = document.createElement('div');
+            taskDue.classList.add('project__tasks__item__dueDate');
+            taskDue.textContent = task.dueDate || 'No date';
+            taskDue.onclick = handleDateClick;
             listItem.append(taskDue);
-            listItem.append(removeButton);
+
+            addRemoveButton();
+            
             list.append(listItem);
+
         }
 
         function initAddTaskButton() {
-            const addTaskButton = document.querySelector('.project__addTask');
-            const projectElement = document.querySelector('.project');
-            addTaskButton.onclick = () => {
-                const taskInputArea = document.createElement('div');
-                taskInputArea.classList.add('project__taskInputArea');
-                const input = document.createElement('input');
-                input.classList.add('project__taskInputArea__input');
-                const save = document.createElement('button');
-                save.classList.add('project__taskInputArea__btn')
-                save.classList.add('project__taskInputArea__btn--save');
-                save.textContent = 'Add';
-                save.addEventListener('click', () => {
+
+            function handleClick() {
+
+                function handleSave() {
                     const task = Task(input.value);
                     ToDoList.addTask(task, project.title);
                     addTaskElement(task);
+                    closeForm();
+                }
+
+                function closeForm() {
                     taskInputArea.remove();
                     addTaskButton.style.display = 'flex';
-                });
-                const cancel = document.createElement('button');
-                cancel.classList.add('project__taskInputArea__btn');
-                cancel.classList.add('project__taskInputArea__btn--cancel');
-                cancel.textContent = 'Cancel';
-                cancel.addEventListener('click', () => {
-                    taskInputArea.remove();
-                    addTaskButton.style.display = 'flex';
-                });
+                }
+
+                function addSaveButton() {
+                    const save = document.createElement('button');
+                    save.classList.add('project__taskInputArea__btn')
+                    save.classList.add('project__taskInputArea__btn--save');
+                    save.textContent = 'Add';
+                    save.onclick = handleSave;
+                    taskInputArea.appendChild(save);
+                }
+
+                function addCancelButton() {
+                    const cancel = document.createElement('button');
+                    cancel.classList.add('project__taskInputArea__btn');
+                    cancel.classList.add('project__taskInputArea__btn--cancel');
+                    cancel.textContent = 'Cancel';
+                    cancel.onclick = closeForm;
+                    taskInputArea.appendChild(cancel);
+                }
+
+                const projectElement = document.querySelector('.project');
+                const taskInputArea = document.createElement('div');
+                const input = document.createElement('input');
+                taskInputArea.classList.add('project__taskInputArea');
+                input.classList.add('project__taskInputArea__input');
                 addTaskButton.style.display = 'none';
                 taskInputArea.appendChild(input);
-                taskInputArea.appendChild(cancel);
-                taskInputArea.appendChild(save);
+                addCancelButton();
+                addSaveButton();
                 projectElement.appendChild(taskInputArea);
                 input.focus();
-            };
+
+            }
+
+            const addTaskButton = document.querySelector('.project__addTask');
+            addTaskButton.onclick = handleClick;
+
         }
 
         const projects = ToDoList.projects;
         const project = projects.find(el => el.title === title);
         const titleElement = document.querySelector('.project__title');
-        titleElement.textContent = project.title;
         const list = document.querySelector('.project__tasks');
+
+        titleElement.textContent = project.title;
         list.innerHTML = null;
+
         if (project.title === 'All tasks') {
             projects.forEach(project => project.tasks.forEach(task => addTaskElement(task)))
         } else {
             project.tasks.forEach(task => addTaskElement(task));
         }
+        
         initAddTaskButton();
 
     }
@@ -112,24 +149,26 @@ const UI = (() => {
     function _initSidebar() {
 
         function addProjectElement(project) {
-            const projectsList = document.querySelector('.sidebar__projects__list');
-            const listItem = document.createElement('li');
-            listItem.classList.add('sidebar__projects__list__item');
-            listItem.classList.add('sidebar__link');
-            const icon = document.createElement('i');
-            icon.classList.add('fas');
-            icon.classList.add('fa-tasks');
-            listItem.append(icon);
-            listItem.append(project.title);
-            listItem.onclick = () => {
+
+            function handleClick() {
                 _loadProject(project.title);
                 const activeElements = document.getElementsByClassName('active');
-                console.log(activeElements)
                 for (const element of activeElements) {
                     element.classList.remove('active');
                 }
                 listItem.classList.add('active');
-            };
+            }
+
+            const projectsList = document.querySelector('.sidebar__projects__list');
+            const listItem = document.createElement('li');
+            const icon = document.createElement('i');
+            listItem.classList.add('sidebar__projects__list__item');
+            listItem.classList.add('sidebar__link');
+            icon.classList.add('fas');
+            icon.classList.add('fa-tasks');
+            listItem.append(icon);
+            listItem.append(project.title);
+            listItem.onclick = handleClick;
             projectsList.append(listItem);
         }
 
@@ -142,47 +181,61 @@ const UI = (() => {
         }
 
         function initAddProjectButton() {
-            const addProjectButton = document.querySelector('.sidebar__projects__add');
-            const projectsElement = document.querySelector('.sidebar__projects');
-            addProjectButton.onclick = () => {
-                const input = document.createElement('input');
-                input.classList.add('sidebar__projects__input');
-                addProjectButton.style.display = 'none';
-                projectsElement.append(input);
 
-                const buttons = document.createElement('div');
-                buttons.classList.add('sidebar__projects__add__btns');
+            function handleAddProject() {
 
-                const save = document.createElement('button');
-                save.classList.add('sidebar__projects__add__btn');
-                save.classList.add('sidebar__projects__add__btn--save');
-                save.textContent = 'Add';
-                save.onclick = () => {
+                function handleCloseInput() {
+                    input.remove();
+                    buttons.remove();
+                    addProjectButton.style.display = 'flex';
+                }
+
+                function handleSave() {
                     const project = Project(input.value);
                     ToDoList.addProject(project);
                     addProjectElement(project);
-                    input.remove();
-                    buttons.remove();
-                    addProjectButton.style.display = 'flex';
-                };
+                    handleCloseInput();
+                }
 
-                const cancel = document.createElement('button');
-                cancel.classList.add('sidebar__projects__add__btn');
-                cancel.classList.add('sidebar__projects__add__btn--cancel');
-                cancel.textContent = 'Cancel';
-                cancel.onclick = () => {
-                    input.remove();
-                    buttons.remove();
-                    addProjectButton.style.display = 'flex';
-                };
+                function hideAddProjectButton() {
+                    addProjectButton.style.display = 'none';
+                }
 
-                buttons.append(cancel);
-                buttons.append(save);
+                function addSaveButton() {
+                    const save = document.createElement('button');
+                    save.classList.add('sidebar__projects__add__btn');
+                    save.classList.add('sidebar__projects__add__btn--save');
+                    save.textContent = 'Add';
+                    save.onclick = handleSave;
+                    buttons.append(save);
+                }
 
+                function addCancelButton() {
+                    const cancel = document.createElement('button');
+                    cancel.classList.add('sidebar__projects__add__btn');
+                    cancel.classList.add('sidebar__projects__add__btn--cancel');
+                    cancel.textContent = 'Cancel';
+                    cancel.onclick = handleCloseInput;
+                    buttons.append(cancel);
+                }
+
+                const projectsElement = document.querySelector('.sidebar__projects');
+                const input = document.createElement('input');
+                input.classList.add('sidebar__projects__input');
+                const buttons = document.createElement('div');
+                buttons.classList.add('sidebar__projects__add__btns');
+                hideAddProjectButton();
+                addCancelButton();
+                addSaveButton();
+                projectsElement.append(input);
                 projectsElement.append(buttons);
-
                 input.focus();
+
             }
+
+            const addProjectButton = document.querySelector('.sidebar__projects__add');
+            addProjectButton.onclick = handleAddProject;
+
         }
 
         function initAllTasksButton() {
