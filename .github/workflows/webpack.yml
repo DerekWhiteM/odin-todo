@@ -27,7 +27,18 @@ jobs:
         npm install
         npx webpack
         
-    - name: Deploy to GH Page
-      uses: actions/deploy-pages@v1
-      with:
-        folder: dist
+  deploy:
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GH Page
+        id: deployment
+        uses: actions/deploy-pages@v1
+        with:
+          folder: dist
