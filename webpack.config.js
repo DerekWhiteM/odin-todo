@@ -5,12 +5,12 @@ module.exports = {
   mode: 'development',
   devtool: 'inline-source-map',
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'docs'),
     filename: 'main.js',
   },
   devServer: {
     static: {
-      directory: path.resolve(__dirname, 'dist'),
+      directory: path.resolve(__dirname, 'docs'),
     },
   },
 };
